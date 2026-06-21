@@ -1,0 +1,25 @@
+Unsupposrted library path: D:\dregora\FairAnvil\forge\build\classes\java\api
+Unsupposrted library path: D:\dregora\FairAnvil\forge\build\resources\api
+Symbol range map extraction starting
+Processing 7 files
+startProcessing "com/scorp/fairanvil/CommandFairAnvil.java" md5: 3da34566bb10df653343ac9b44868a8f
+endProcessing "com/scorp/fairanvil/CommandFairAnvil.java"
+
+startProcessing "com/scorp/fairanvil/ContainerFairAnvil.java" md5: 7876fa48d2489b615462774e8db50cd5
+endProcessing "com/scorp/fairanvil/ContainerFairAnvil.java"
+
+startProcessing "com/scorp/fairanvil/ContainerFairEnchantment.java" md5: 83236bae773998eaec3f74573183d22f
+endProcessing "com/scorp/fairanvil/ContainerFairEnchantment.java"
+
+startProcessing "com/scorp/fairanvil/Experience.java" md5: 6fb9c5b0edcf3f4685298a42d5ea13cb
+endProcessing "com/scorp/fairanvil/Experience.java"
+
+startProcessing "com/scorp/fairanvil/FairAnvilInteractionObject.java" md5: 815b2ff9b73d59c8d6a368e6991cb432
+endProcessing "com/scorp/fairanvil/FairAnvilInteractionObject.java"
+
+startProcessing "com/scorp/fairanvil/FairAnvilMod.java" md5: 793b66fec8a0ff0f9196529ff5b1b3f9
+endProcessing "com/scorp/fairanvil/FairAnvilMod.java"
+
+startProcessing "com/scorp/fairanvil/FairEnchantInteractionObject.java" md5: ed2eefb28caa2bac17e20df3809de88f
+endProcessing "com/scorp/fairanvil/FairEnchantInteractionObject.java"
+

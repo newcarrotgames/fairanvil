@@ -1,0 +1,57 @@
+buildscript {
+    repositories {
+        maven { url = "https://maven.minecraftforge.net" }
+        maven { url = "https://repo.spongepowered.org/repository/maven-public/" }
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '2.3-SNAPSHOT', changing: true
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+version = "1.0"
+group = "com.scorp.fairanvil"
+archivesBaseName = "FairAnvil-Forge-1.12.2"
+
+// Forge 1.12.2 must be built with a Java 8 JDK.
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+
+minecraft {
+    version = "1.12.2-14.23.5.2847"
+    runDir = "run"
+    // If "stable_39" fails to download, try "snapshot_20171003".
+    mappings = "stable_39"
+}
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    from(sourceSets.main.resources.srcDirs) {
+        include "mcmod.info"
+        expand "version": project.version, "mcversion": project.minecraft.version
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude "mcmod.info"
+    }
+}
+
+// Destination RLCraft Dregora dev instance mods folder. Override with -PmodsDir=... if it changes.
+ext.modsDir = project.hasProperty("modsDir")
+        ? project.modsDir
+        : "D:/curseforge/minecraft/Instances/RLCraft Dregora (Local Dev)/mods"
+
+// Copies the final (reobfuscated) mod jar into the RLCraft mods folder.
+// Run on its own with: gradlew copyToRLCraft   (also runs automatically after a build)
+task copyToRLCraft(type: Copy, dependsOn: 'reobfJar') {
+    from jar.archivePath
+    into modsDir
+    doLast {
+        println "Copied ${jar.archivePath.name} -> ${modsDir}"
+    }
+}
+
+build.finalizedBy copyToRLCraft

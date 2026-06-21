@@ -1,0 +1,268 @@
+Processing 7 files
+Start Processing: com/scorp/fairanvil/CommandFairAnvil.java
+Rename method net/minecraft/command/ICommand/getName ()Ljava/lang/String;[616,623]::getName->func_71517_b
+Rename method net/minecraft/command/ICommand/getUsage (Lnet/minecraft/command/ICommandSender;)Ljava/lang/String;[705,713]::getUsage->func_71518_a
+Rename method net/minecraft/command/CommandBase/getRequiredPermissionLevel ()I[843,869]::getRequiredPermissionLevel->func_82362_a
+Rename method net/minecraft/command/ICommand/execute (Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/command/ICommandSender;[Ljava/lang/String;)V[920,927]::execute->func_184881_a
+Rename method net/minecraft/command/ICommandSender/sendMessage (Lnet/minecraft/util/text/ITextComponent;)V[1075,1086]::sendMessage->func_145747_a
+Rename method net/minecraft/command/ICommandSender/sendMessage (Lnet/minecraft/util/text/ITextComponent;)V[1333,1344]::sendMessage->func_145747_a
+Rename method net/minecraft/command/ICommandSender/sendMessage (Lnet/minecraft/util/text/ITextComponent;)V[1563,1574]::sendMessage->func_145747_a
+Rename method net/minecraft/command/ICommandSender/sendMessage (Lnet/minecraft/util/text/ITextComponent;)V[1803,1814]::sendMessage->func_145747_a
+Rename method net/minecraft/command/ICommandSender/sendMessage (Lnet/minecraft/util/text/ITextComponent;)V[1981,1992]::sendMessage->func_145747_a
+Rename method net/minecraft/command/ICommand/getUsage (Lnet/minecraft/command/ICommandSender;)Ljava/lang/String;[2092,2100]::getUsage->func_71518_a
+Import: java.util.Locale
+Import: net.minecraft.command.CommandBase
+Import: net.minecraft.command.CommandException
+Import: net.minecraft.command.ICommandSender
+Import: net.minecraft.command.WrongUsageException
+Import: net.minecraft.server.MinecraftServer
+Import: net.minecraft.util.text.TextComponentString
+End  Processing: com/scorp/fairanvil/CommandFairAnvil.java
+
+Start Processing: com/scorp/fairanvil/ContainerFairAnvil.java
+FOUND CONSTR method com/scorp/fairanvil/ContainerFairAnvil/ContainerFairAnvil (Lnet/minecraft/entity/player/InventoryPlayer;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/player/EntityPlayer;)V com/scorp/fairanvil/ContainerFairAnvil
+Rename field net/minecraft/inventory/Container/inventorySlots[2282,2296]::inventorySlots->field_75151_b
+Rename field net/minecraft/inventory/Slot/inventory[2303,2312]::inventory->field_75224_c
+Rename field net/minecraft/inventory/Container/inventorySlots[2349,2363]::inventorySlots->field_75151_b
+Rename field net/minecraft/inventory/Slot/inventory[2370,2379]::inventory->field_75224_c
+Rename field net/minecraft/inventory/Slot/slotNumber[2579,2589]::slotNumber->field_75222_d
+Rename field net/minecraft/inventory/Container/inventorySlots[2612,2626]::inventorySlots->field_75151_b
+Rename method net/minecraft/inventory/ContainerRepair/updateItemName (Ljava/lang/String;)V[2683,2697]::updateItemName->func_82850_a
+Rename method net/minecraft/inventory/ContainerRepair/updateRepairOutput ()V[2787,2805]::updateRepairOutput->func_82848_d
+Rename method net/minecraft/inventory/Container/transferStackInSlot (Lnet/minecraft/entity/player/EntityPlayer;I)Lnet/minecraft/item/ItemStack;[2849,2868]::transferStackInSlot->func_82846_b
+Rename field net/minecraft/inventory/Container/inventorySlots[3078,3092]::inventorySlots->field_75151_b
+Rename method net/minecraft/inventory/Slot/getHasStack ()Z[3152,3163]::getHasStack->func_75216_d
+Rename method net/minecraft/inventory/Slot/canTakeStack (Lnet/minecraft/entity/player/EntityPlayer;)Z[3176,3188]::canTakeStack->func_82869_a
+Rename field net/minecraft/item/ItemStack/EMPTY[3232,3237]::EMPTY->field_190927_a
+Rename method net/minecraft/inventory/Container/transferStackInSlot (Lnet/minecraft/entity/player/EntityPlayer;I)Lnet/minecraft/item/ItemStack;[3281,3300]::transferStackInSlot->func_82846_b
+Rename method net/minecraft/inventory/ContainerRepair/updateRepairOutput ()V[3353,3371]::updateRepairOutput->func_82848_d
+Rename method net/minecraft/inventory/IInventory/getStackInSlot (I)Lnet/minecraft/item/ItemStack;[3415,3429]::getStackInSlot->func_70301_a
+Rename method net/minecraft/inventory/IInventory/getStackInSlot (I)Lnet/minecraft/item/ItemStack;[3698,3712]::getStackInSlot->func_70301_a
+Rename method net/minecraft/inventory/IInventory/setInventorySlotContents (ILnet/minecraft/item/ItemStack;)V[3817,3841]::setInventorySlotContents->func_70299_a
+Rename field net/minecraft/item/ItemStack/EMPTY[3843,3848]::EMPTY->field_190927_a
+Rename method net/minecraft/item/ItemStack/isEmpty ()Z[3956,3963]::isEmpty->func_190926_b
+Rename method net/minecraft/inventory/IInventory/setInventorySlotContents (ILnet/minecraft/item/ItemStack;)V[4003,4027]::setInventorySlotContents->func_70299_a
+Rename method net/minecraft/item/ItemStack/isEmpty ()Z[4195,4202]::isEmpty->func_190926_b
+Rename method net/minecraft/inventory/IInventory/setInventorySlotContents (ILnet/minecraft/item/ItemStack;)V[4242,4266]::setInventorySlotContents->func_70299_a
+Rename field net/minecraft/item/ItemStack/EMPTY[4268,4273]::EMPTY->field_190927_a
+Rename method net/minecraft/item/ItemStack/copy ()Lnet/minecraft/item/ItemStack;[4393,4397]::copy->func_77946_l
+Rename method net/minecraft/inventory/IInventory/getStackInSlot (I)Lnet/minecraft/item/ItemStack;[4455,4469]::getStackInSlot->func_70301_a
+Rename method net/minecraft/enchantment/EnchantmentHelper/getEnchantments (Lnet/minecraft/item/ItemStack;)Ljava/util/Map;[4531,4546]::getEnchantments->func_82781_a
+Rename method net/minecraft/item/ItemStack/getRepairCost ()I[4615,4628]::getRepairCost->func_82838_A
+Rename method net/minecraft/item/ItemStack/isEmpty ()Z[4644,4651]::isEmpty->func_190926_b
+Rename method net/minecraft/item/ItemStack/getRepairCost ()I[4677,4690]::getRepairCost->func_82838_A
+Rename method net/minecraft/item/ItemStack/isEmpty ()Z[4748,4755]::isEmpty->func_190926_b
+Rename method net/minecraft/item/ItemStack/getItem ()Lnet/minecraft/item/Item;[4798,4805]::getItem->func_77973_b
+Rename field net/minecraft/init/Items/ENCHANTED_BOOK[4822,4836]::ENCHANTED_BOOK->field_151134_bR
+Rename method net/minecraft/item/ItemEnchantedBook/getEnchantments (Lnet/minecraft/item/ItemStack;)Lnet/minecraft/nbt/NBTTagList;[4859,4874]::getEnchantments->func_92110_g
+Rename method net/minecraft/nbt/NBTTagList/tagCount ()I[4884,4892]::tagCount->func_74745_c
+Rename method net/minecraft/item/ItemStack/isItemStackDamageable ()Z[4934,4955]::isItemStackDamageable->func_77984_f
+Rename method net/minecraft/item/ItemStack/getItem ()Lnet/minecraft/item/Item;[4963,4970]::getItem->func_77973_b
+Rename method net/minecraft/item/Item/getIsRepairable (Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)Z[4978,4993]::getIsRepairable->func_82789_a
+Rename method net/minecraft/item/ItemStack/getItemDamage ()I[5063,5076]::getItemDamage->func_77952_i
+Rename method net/minecraft/item/ItemStack/getMaxDamage ()I[5090,5102]::getMaxDamage->func_77958_k
+Rename method net/minecraft/inventory/IInventory/setInventorySlotContents (ILnet/minecraft/item/ItemStack;)V[5181,5205]::setInventorySlotContents->func_70299_a
+Rename field net/minecraft/item/ItemStack/EMPTY[5207,5212]::EMPTY->field_190927_a
+Rename method net/minecraft/item/ItemStack/getCount ()I[5395,5403]::getCount->func_190916_E
+Rename method net/minecraft/item/ItemStack/getItemDamage ()I[5461,5474]::getItemDamage->func_77952_i
+Rename method net/minecraft/item/ItemStack/setItemDamage (I)V[5514,5527]::setItemDamage->func_77964_b
+Rename method net/minecraft/item/ItemStack/getItemDamage ()I[5604,5617]::getItemDamage->func_77952_i
+Rename method net/minecraft/item/ItemStack/getMaxDamage ()I[5631,5643]::getMaxDamage->func_77958_k
+Rename method net/minecraft/item/ItemStack/getItem ()Lnet/minecraft/item/Item;[5773,5780]::getItem->func_77973_b
+Rename method net/minecraft/item/ItemStack/getItem ()Lnet/minecraft/item/Item;[5802,5809]::getItem->func_77973_b
+Rename method net/minecraft/item/ItemStack/isItemStackDamageable ()Z[5832,5853]::isItemStackDamageable->func_77984_f
+Rename method net/minecraft/inventory/IInventory/setInventorySlotContents (ILnet/minecraft/item/ItemStack;)V[5887,5911]::setInventorySlotContents->func_70299_a
+Rename field net/minecraft/item/ItemStack/EMPTY[5913,5918]::EMPTY->field_190927_a
+Rename method net/minecraft/item/ItemStack/isItemStackDamageable ()Z[6052,6073]::isItemStackDamageable->func_77984_f
+Rename method net/minecraft/item/ItemStack/getMaxDamage ()I[6118,6130]::getMaxDamage->func_77958_k
+Rename method net/minecraft/item/ItemStack/getItemDamage ()I[6145,6158]::getItemDamage->func_77952_i
+Rename method net/minecraft/item/ItemStack/getMaxDamage ()I[6202,6214]::getMaxDamage->func_77958_k
+Rename method net/minecraft/item/ItemStack/getItemDamage ()I[6230,6243]::getItemDamage->func_77952_i
+Rename method net/minecraft/item/ItemStack/getMaxDamage ()I[6292,6304]::getMaxDamage->func_77958_k
+Rename method net/minecraft/item/ItemStack/getMaxDamage ()I[6398,6410]::getMaxDamage->func_77958_k
+Rename method net/minecraft/item/ItemStack/getMetadata ()I[6555,6566]::getMetadata->func_77960_j
+Rename method net/minecraft/item/ItemStack/setItemDamage (I)V[6609,6622]::setItemDamage->func_77964_b
+Rename method net/minecraft/enchantment/EnchantmentHelper/getEnchantments (Lnet/minecraft/item/ItemStack;)Ljava/util/Map;[6772,6787]::getEnchantments->func_82781_a
+Rename method net/minecraft/enchantment/Enchantment/canApply (Lnet/minecraft/item/ItemStack;)Z[7290,7298]::canApply->func_92089_a
+Rename field net/minecraft/entity/player/EntityPlayer/capabilities[7356,7368]::capabilities->field_71075_bZ
+Rename field net/minecraft/entity/player/PlayerCapabilities/isCreativeMode[7371,7385]::isCreativeMode->field_75098_d
+Rename method net/minecraft/item/ItemStack/getItem ()Lnet/minecraft/item/Item;[7398,7405]::getItem->func_77973_b
+Rename field net/minecraft/init/Items/ENCHANTED_BOOK[7422,7436]::ENCHANTED_BOOK->field_151134_bR
+Rename method net/minecraft/enchantment/Enchantment/isCompatibleWith (Lnet/minecraft/enchantment/Enchantment;)Z[7663,7679]::isCompatibleWith->func_191560_c
+Rename method net/minecraft/enchantment/Enchantment/getMaxLevel ()I[8051,8062]::getMaxLevel->func_77325_b
+Rename method net/minecraft/enchantment/Enchantment/getMaxLevel ()I[8120,8131]::getMaxLevel->func_77325_b
+Rename method net/minecraft/enchantment/Enchantment/getRarity ()Lnet/minecraft/enchantment/Enchantment$Rarity;[8335,8344]::getRarity->func_77324_c
+Rename method net/minecraft/item/ItemStack/getCount ()I[9106,9114]::getCount->func_190916_E
+Rename method net/minecraft/inventory/IInventory/setInventorySlotContents (ILnet/minecraft/item/ItemStack;)V[9348,9372]::setInventorySlotContents->func_70299_a
+Rename field net/minecraft/item/ItemStack/EMPTY[9374,9379]::EMPTY->field_190927_a
+Rename method net/minecraft/item/ItemStack/hasDisplayName ()Z[9587,9601]::hasDisplayName->func_82837_s
+Rename method net/minecraft/item/ItemStack/clearCustomName ()V[9682,9697]::clearCustomName->func_135074_t
+Rename method net/minecraft/item/ItemStack/getDisplayName ()Ljava/lang/String;[9768,9782]::getDisplayName->func_82833_r
+Rename method net/minecraft/item/ItemStack/setStackDisplayName (Ljava/lang/String;)Lnet/minecraft/item/ItemStack;[9852,9871]::setStackDisplayName->func_151001_c
+Rename field net/minecraft/item/ItemStack/EMPTY[9985,9990]::EMPTY->field_190927_a
+Rename method net/minecraft/item/ItemStack/isEmpty ()Z[10223,10230]::isEmpty->func_190926_b
+Rename method net/minecraft/item/ItemStack/getRepairCost ()I[10275,10288]::getRepairCost->func_82838_A
+Rename method net/minecraft/item/ItemStack/isEmpty ()Z[10322,10329]::isEmpty->func_190926_b
+Rename method net/minecraft/item/ItemStack/getRepairCost ()I[10357,10370]::getRepairCost->func_82838_A
+Rename method net/minecraft/item/ItemStack/getRepairCost ()I[10408,10421]::getRepairCost->func_82838_A
+Rename method net/minecraft/item/ItemStack/setRepairCost (I)V[10553,10566]::setRepairCost->func_82841_c
+Rename method net/minecraft/enchantment/EnchantmentHelper/setEnchantments (Ljava/util/Map;Lnet/minecraft/item/ItemStack;)V[10602,10617]::setEnchantments->func_82782_a
+Rename method net/minecraft/inventory/IInventory/setInventorySlotContents (ILnet/minecraft/item/ItemStack;)V[10670,10694]::setInventorySlotContents->func_70299_a
+Rename field net/minecraft/inventory/ContainerRepair/maximumCost[11427,11438]::maximumCost->field_82854_e
+Rename field net/minecraft/inventory/Container/listeners[11509,11518]::listeners->field_75149_d
+Rename method net/minecraft/inventory/IContainerListener/sendWindowProperty (Lnet/minecraft/inventory/Container;II)V[11548,11566]::sendWindowProperty->func_71112_a
+Rename field net/minecraft/inventory/ContainerRepair/maximumCost[11575,11586]::maximumCost->field_82854_e
+Rename method net/minecraft/inventory/Container/detectAndSendChanges ()V[11616,11636]::detectAndSendChanges->func_75142_b
+FOUND CONSTR method com/scorp/fairanvil/ContainerFairAnvil/FairOutputSlot/FairOutputSlot (Lnet/minecraft/inventory/IInventory;III)V com/scorp/fairanvil/ContainerFairAnvil/FairOutputSlot
+Rename method net/minecraft/inventory/Slot/isItemValid (Lnet/minecraft/item/ItemStack;)Z[11985,11996]::isItemValid->func_75214_a
+Rename method net/minecraft/inventory/Slot/canTakeStack (Lnet/minecraft/entity/player/EntityPlayer;)Z[12100,12112]::canTakeStack->func_82869_a
+Rename field net/minecraft/entity/player/EntityPlayer/capabilities[12168,12180]::capabilities->field_71075_bZ
+Rename field net/minecraft/entity/player/PlayerCapabilities/isCreativeMode[12183,12197]::isCreativeMode->field_75098_d
+Rename method net/minecraft/inventory/Slot/getHasStack ()Z[12420,12431]::getHasStack->func_75216_d
+Rename method net/minecraft/inventory/Slot/onTake (Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/item/ItemStack;)Lnet/minecraft/item/ItemStack;[12494,12500]::onTake->func_190901_a
+Rename field net/minecraft/entity/player/EntityPlayer/capabilities[12579,12591]::capabilities->field_71075_bZ
+Rename field net/minecraft/entity/player/PlayerCapabilities/isCreativeMode[12594,12608]::isCreativeMode->field_75098_d
+Rename method net/minecraft/inventory/IInventory/setInventorySlotContents (ILnet/minecraft/item/ItemStack;)V[12789,12813]::setInventorySlotContents->func_70299_a
+Rename field net/minecraft/item/ItemStack/EMPTY[12815,12820]::EMPTY->field_190927_a
+Rename method net/minecraft/inventory/IInventory/getStackInSlot (I)Lnet/minecraft/item/ItemStack;[12961,12975]::getStackInSlot->func_70301_a
+Rename method net/minecraft/item/ItemStack/isEmpty ()Z[13011,13018]::isEmpty->func_190926_b
+Rename method net/minecraft/item/ItemStack/getCount ()I[13039,13047]::getCount->func_190916_E
+Rename method net/minecraft/item/ItemStack/shrink (I)V[13122,13128]::shrink->func_190918_g
+Rename method net/minecraft/inventory/IInventory/setInventorySlotContents (ILnet/minecraft/item/ItemStack;)V[13224,13248]::setInventorySlotContents->func_70299_a
+Rename method net/minecraft/inventory/IInventory/setInventorySlotContents (ILnet/minecraft/item/ItemStack;)V[13331,13355]::setInventorySlotContents->func_70299_a
+Rename field net/minecraft/item/ItemStack/EMPTY[13357,13362]::EMPTY->field_190927_a
+Rename method net/minecraft/inventory/IInventory/setInventorySlotContents (ILnet/minecraft/item/ItemStack;)V[13465,13489]::setInventorySlotContents->func_70299_a
+Rename field net/minecraft/item/ItemStack/EMPTY[13491,13496]::EMPTY->field_190927_a
+Rename field net/minecraft/inventory/ContainerRepair/maximumCost[13562,13573]::maximumCost->field_82854_e
+Rename method net/minecraft/world/IBlockAccess/getBlockState (Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/state/IBlockState;[13699,13712]::getBlockState->func_180495_p
+Rename field net/minecraft/entity/player/EntityPlayer/capabilities[13773,13785]::capabilities->field_71075_bZ
+Rename field net/minecraft/entity/player/PlayerCapabilities/isCreativeMode[13788,13802]::isCreativeMode->field_75098_d
+Rename field net/minecraft/world/World/isRemote[13836,13844]::isRemote->field_72995_K
+Rename method net/minecraft/block/state/IBlockState/getBlock ()Lnet/minecraft/block/Block;[13880,13888]::getBlock->func_177230_c
+Rename field net/minecraft/init/Blocks/ANVIL[13906,13911]::ANVIL->field_150467_bQ
+Rename method net/minecraft/entity/EntityLivingBase/getRNG ()Ljava/util/Random;[13935,13941]::getRNG->func_70681_au
+Rename method net/minecraft/block/state/IBlockState/getValue (Lnet/minecraft/block/properties/IProperty;)Ljava/lang/Comparable;[14010,14018]::getValue->func_177229_b
+Rename field net/minecraft/block/BlockAnvil/DAMAGE[14035,14041]::DAMAGE->field_176505_b
+Rename method net/minecraft/world/World/setBlockToAir (Lnet/minecraft/util/math/BlockPos;)Z[14155,14168]::setBlockToAir->func_175698_g
+Rename method net/minecraft/world/World/playEvent (ILnet/minecraft/util/math/BlockPos;I)V[14250,14259]::playEvent->func_175718_b
+Rename method net/minecraft/world/World/setBlockState (Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;I)Z[14380,14393]::setBlockState->func_180501_a
+Rename method net/minecraft/block/state/IBlockState/withProperty (Lnet/minecraft/block/properties/IProperty;Ljava/lang/Comparable;)Lnet/minecraft/block/state/IBlockState;[14458,14470]::withProperty->func_177226_a
+Rename field net/minecraft/block/BlockAnvil/DAMAGE[14483,14489]::DAMAGE->field_176505_b
+Rename method net/minecraft/world/World/playEvent (ILnet/minecraft/util/math/BlockPos;I)V[14580,14589]::playEvent->func_175718_b
+Rename field net/minecraft/world/World/isRemote[14707,14715]::isRemote->field_72995_K
+Rename method net/minecraft/world/World/playEvent (ILnet/minecraft/util/math/BlockPos;I)V[14771,14780]::playEvent->func_175718_b
+Import: java.util.Map
+Import: org.apache.commons.lang3.StringUtils
+Import: net.minecraft.block.BlockAnvil
+Import: net.minecraft.block.state.IBlockState
+Import: net.minecraft.enchantment.Enchantment
+Import: net.minecraft.enchantment.EnchantmentHelper
+Import: net.minecraft.entity.player.EntityPlayer
+Import: net.minecraft.entity.player.InventoryPlayer
+Import: net.minecraft.init.Blocks
+Import: net.minecraft.init.Items
+Import: net.minecraft.inventory.ContainerRepair
+Import: net.minecraft.inventory.IContainerListener
+Import: net.minecraft.inventory.IInventory
+Import: net.minecraft.inventory.Slot
+Import: net.minecraft.item.ItemEnchantedBook
+Import: net.minecraft.item.ItemStack
+Import: net.minecraft.util.math.BlockPos
+Import: net.minecraft.world.World
+Import: net.minecraftforge.common.MinecraftForge
+Import: net.minecraftforge.event.AnvilUpdateEvent
+End  Processing: com/scorp/fairanvil/ContainerFairAnvil.java
+
+Start Processing: com/scorp/fairanvil/ContainerFairEnchantment.java
+FOUND CONSTR method com/scorp/fairanvil/ContainerFairEnchantment/ContainerFairEnchantment (Lnet/minecraft/entity/player/InventoryPlayer;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V com/scorp/fairanvil/ContainerFairEnchantment
+Rename method net/minecraft/inventory/Container/enchantItem (Lnet/minecraft/entity/player/EntityPlayer;I)Z[950,961]::enchantItem->func_75140_a
+Rename field net/minecraft/entity/Entity/world[1014,1019]::world->field_70170_p
+Rename field net/minecraft/world/World/isRemote[1028,1036]::isRemote->field_72995_K
+Rename field net/minecraft/entity/player/EntityPlayer/capabilities[1052,1064]::capabilities->field_71075_bZ
+Rename field net/minecraft/entity/player/PlayerCapabilities/isCreativeMode[1067,1081]::isCreativeMode->field_75098_d
+Rename method net/minecraft/inventory/Container/enchantItem (Lnet/minecraft/entity/player/EntityPlayer;I)Z[1110,1121]::enchantItem->func_75140_a
+Rename method net/minecraft/inventory/Container/enchantItem (Lnet/minecraft/entity/player/EntityPlayer;I)Z[1346,1357]::enchantItem->func_75140_a
+Import: net.minecraft.entity.player.EntityPlayer
+Import: net.minecraft.entity.player.InventoryPlayer
+Import: net.minecraft.inventory.ContainerEnchantment
+Import: net.minecraft.util.math.BlockPos
+Import: net.minecraft.world.World
+End  Processing: com/scorp/fairanvil/ContainerFairEnchantment.java
+
+Start Processing: com/scorp/fairanvil/Experience.java
+FOUND CONSTR method com/scorp/fairanvil/Experience/Experience ()V com/scorp/fairanvil/Experience
+Rename field net/minecraft/entity/player/EntityPlayer/experienceLevel[2613,2628]::experienceLevel->field_71068_ca
+Rename field net/minecraft/entity/player/EntityPlayer/experienceLevel[2679,2694]::experienceLevel->field_71068_ca
+Rename field net/minecraft/entity/player/EntityPlayer/experience[2704,2714]::experience->field_71106_cc
+Rename field net/minecraft/entity/player/EntityPlayer/experienceLevel[3041,3056]::experienceLevel->field_71068_ca
+Rename field net/minecraft/entity/player/EntityPlayer/experience[3081,3091]::experience->field_71106_cc
+Rename field net/minecraft/entity/player/EntityPlayer/experienceTotal[3145,3160]::experienceTotal->field_71067_cb
+Import: net.minecraft.entity.player.EntityPlayer
+End  Processing: com/scorp/fairanvil/Experience.java
+
+Start Processing: com/scorp/fairanvil/FairAnvilInteractionObject.java
+FOUND CONSTR method com/scorp/fairanvil/FairAnvilInteractionObject/FairAnvilInteractionObject (Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V com/scorp/fairanvil/FairAnvilInteractionObject
+Rename method net/minecraft/world/IInteractionObject/createContainer (Lnet/minecraft/entity/player/InventoryPlayer;Lnet/minecraft/entity/player/EntityPlayer;)Lnet/minecraft/inventory/Container;[989,1004]::createContainer->func_174876_a
+Rename method net/minecraft/world/IInteractionObject/getGuiID ()Ljava/lang/String;[1193,1201]::getGuiID->func_174875_k
+Rename method net/minecraft/world/IWorldNameable/getName ()Ljava/lang/String;[1289,1296]::getName->func_70005_c_
+Rename method net/minecraft/world/IWorldNameable/hasCustomName ()Z[1387,1400]::hasCustomName->func_145818_k_
+Rename method net/minecraft/world/IWorldNameable/getDisplayName ()Lnet/minecraft/util/text/ITextComponent;[1480,1494]::getDisplayName->func_145748_c_
+Import: net.minecraft.entity.player.EntityPlayer
+Import: net.minecraft.entity.player.InventoryPlayer
+Import: net.minecraft.inventory.Container
+Import: net.minecraft.util.math.BlockPos
+Import: net.minecraft.util.text.ITextComponent
+Import: net.minecraft.util.text.TextComponentTranslation
+Import: net.minecraft.world.IInteractionObject
+Import: net.minecraft.world.World
+End  Processing: com/scorp/fairanvil/FairAnvilInteractionObject.java
+
+Start Processing: com/scorp/fairanvil/FairAnvilMod.java
+New Key: class net/minecraftforge/fml/common/Mod
+New Key: class net/minecraftforge/fml/common/Mod
+New Key: class net/minecraftforge/event/entity/player/PlayerInteractEvent
+Rename field net/minecraft/world/World/isRemote[3114,3122]::isRemote->field_72995_K
+Rename method net/minecraft/world/IBlockAccess/getBlockState (Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/state/IBlockState;[3376,3389]::getBlockState->func_180495_p
+Rename method net/minecraft/block/state/IBlockState/getBlock ()Lnet/minecraft/block/Block;[3395,3403]::getBlock->func_177230_c
+Rename field net/minecraft/init/Blocks/ANVIL[3455,3460]::ANVIL->field_150467_bQ
+Rename field net/minecraft/init/Blocks/ENCHANTING_TABLE[3517,3533]::ENCHANTING_TABLE->field_150381_bn
+Rename method net/minecraft/entity/EntityLivingBase/getHeldItemMainhand ()Lnet/minecraft/item/ItemStack;[3897,3916]::getHeldItemMainhand->func_184614_ca
+Rename method net/minecraft/item/ItemStack/isEmpty ()Z[3914,3921]::isEmpty->func_190926_b
+Rename method net/minecraft/entity/EntityLivingBase/getHeldItemOffhand ()Lnet/minecraft/item/ItemStack;[3941,3959]::getHeldItemOffhand->func_184592_cb
+Rename method net/minecraft/item/ItemStack/isEmpty ()Z[3958,3965]::isEmpty->func_190926_b
+Rename method net/minecraft/entity/Entity/isSneaking ()Z[3995,4005]::isSneaking->func_70093_af
+Rename method net/minecraft/entity/player/EntityPlayer/displayGui (Lnet/minecraft/world/IInteractionObject;)V[4143,4153]::displayGui->func_180468_a
+Rename method net/minecraft/entity/player/EntityPlayer/displayGui (Lnet/minecraft/world/IInteractionObject;)V[4240,4250]::displayGui->func_180468_a
+Import: net.minecraft.block.Block
+Import: net.minecraft.entity.player.EntityPlayer
+Import: net.minecraft.entity.player.EntityPlayerMP
+Import: net.minecraft.init.Blocks
+Import: net.minecraft.util.EnumHand
+Import: net.minecraft.util.math.BlockPos
+Import: net.minecraft.world.World
+Import: net.minecraftforge.common.MinecraftForge
+Import: net.minecraftforge.common.config.Configuration
+Import: net.minecraftforge.event.entity.player.PlayerInteractEvent
+Import: net.minecraftforge.fml.common.Mod
+Import: net.minecraftforge.fml.common.event.FMLPreInitializationEvent
+Import: net.minecraftforge.fml.common.event.FMLServerStartingEvent
+Import: net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+End  Processing: com/scorp/fairanvil/FairAnvilMod.java
+
+Start Processing: com/scorp/fairanvil/FairEnchantInteractionObject.java
+FOUND CONSTR method com/scorp/fairanvil/FairEnchantInteractionObject/FairEnchantInteractionObject (Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V com/scorp/fairanvil/FairEnchantInteractionObject
+Rename method net/minecraft/world/IInteractionObject/createContainer (Lnet/minecraft/entity/player/InventoryPlayer;Lnet/minecraft/entity/player/EntityPlayer;)Lnet/minecraft/inventory/Container;[884,899]::createContainer->func_174876_a
+Rename method net/minecraft/world/IInteractionObject/getGuiID ()Ljava/lang/String;[1084,1092]::getGuiID->func_174875_k
+Rename method net/minecraft/world/IWorldNameable/getName ()Ljava/lang/String;[1191,1198]::getName->func_70005_c_
+Rename method net/minecraft/world/IWorldNameable/hasCustomName ()Z[1290,1303]::hasCustomName->func_145818_k_
+Rename method net/minecraft/world/IWorldNameable/getDisplayName ()Lnet/minecraft/util/text/ITextComponent;[1383,1397]::getDisplayName->func_145748_c_
+Import: net.minecraft.entity.player.EntityPlayer
+Import: net.minecraft.entity.player.InventoryPlayer
+Import: net.minecraft.inventory.Container
+Import: net.minecraft.util.math.BlockPos
+Import: net.minecraft.util.text.ITextComponent
+Import: net.minecraft.util.text.TextComponentTranslation
+Import: net.minecraft.world.IInteractionObject
+Import: net.minecraft.world.World
+End  Processing: com/scorp/fairanvil/FairEnchantInteractionObject.java
+
