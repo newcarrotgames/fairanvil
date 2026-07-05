@@ -88,9 +88,18 @@ public class ContainerFairAnvil extends ContainerRepair {
         int j = 0;
         int k = 0;
 
+        // TEMP DEBUG: entry snapshot of both input slots. Remove once the desync question is settled.
+        ItemStack dbgLeft = this.inputInv.getStackInSlot(0);
+        ItemStack dbgRight = this.inputInv.getStackInSlot(1);
+        System.out.println("[FairAnvil] updateRepairOutput ENTRY:"
+                + " left=" + dbgItem(dbgLeft)
+                + " right=" + dbgItem(dbgRight)
+                + " repairName='" + this.repairName + "'");
+
         // Mod compatibility: let other mods (or RLCraft) supply or cancel the anvil result.
         AnvilUpdateEvent event = new AnvilUpdateEvent(itemstack, this.inputInv.getStackInSlot(1), this.repairName, 0);
         if (MinecraftForge.EVENT_BUS.post(event)) {
+            System.out.println("[FairAnvil] EARLY RETURN: AnvilUpdateEvent canceled by another mod");
             this.outputInv.setInventorySlotContents(0, ItemStack.EMPTY);
             this.applyCost(0);
             return;
@@ -98,11 +107,27 @@ public class ContainerFairAnvil extends ContainerRepair {
         if (!event.getOutput().isEmpty()) {
             this.outputInv.setInventorySlotContents(0, event.getOutput());
             this.matCost = event.getMaterialCost();
-            this.applyCost(event.getCost());
+
+            // Mod-supplied anvil recipes (e.g. better_survival/somanyenchantments custom-enchant
+            // application) report only their own flat cost and would otherwise skip the prior-work
+            // penalty entirely. Fold that penalty in so these recipes are priced like any other
+            // combine, then let applyCost() do the flat-point clamp/charge.
+            ItemStack rightInput = this.inputInv.getStackInSlot(1);
+            int priorWork = itemstack.getRepairCost() + (rightInput.isEmpty() ? 0 : rightInput.getRepairCost());
+            int eventCost = event.getCost() + priorWork;
+
+            System.out.println("[FairAnvil] EARLY RETURN: AnvilUpdateEvent supplied output,"
+                    + " modCost=" + event.getCost() + " priorWork=" + priorWork
+                    + " totalCost=" + eventCost
+                    + " shownLevels=" + (FairAnvilMod.hideTooExpensive ? Math.min(eventCost, 39) : eventCost)
+                    + " pointCharge=" + Experience.getExpFromLevel(FairAnvilMod.hideTooExpensive ? Math.min(eventCost, 39) : eventCost));
+
+            this.applyCost(eventCost);
             return;
         }
 
         if (itemstack.isEmpty()) {
+            System.out.println("[FairAnvil] EARLY RETURN: left slot empty");
             this.outputInv.setInventorySlotContents(0, ItemStack.EMPTY);
             this.applyCost(0);
             return;
@@ -122,6 +147,7 @@ public class ContainerFairAnvil extends ContainerRepair {
                 int l2 = Math.min(itemstack1.getItemDamage(), itemstack1.getMaxDamage() / 4);
 
                 if (l2 <= 0) {
+                    System.out.println("[FairAnvil] EARLY RETURN: repair path but item not damaged (l2<=0)");
                     this.outputInv.setInventorySlotContents(0, ItemStack.EMPTY);
                     this.applyCost(0);
                     return;
@@ -138,6 +164,9 @@ public class ContainerFairAnvil extends ContainerRepair {
                 this.matCost = i3;
             } else {
                 if (!flag && (itemstack1.getItem() != itemstack2.getItem() || !itemstack1.isItemStackDamageable())) {
+                    System.out.println("[FairAnvil] EARLY RETURN: not a book and items don't match / not damageable"
+                            + " (flag=" + flag + ", sameItem=" + (itemstack1.getItem() == itemstack2.getItem())
+                            + ", damageable=" + itemstack1.isItemStackDamageable() + ")");
                     this.outputInv.setInventorySlotContents(0, ItemStack.EMPTY);
                     this.applyCost(0);
                     return;
@@ -164,23 +193,32 @@ public class ContainerFairAnvil extends ContainerRepair {
                 boolean flag2 = false;
                 boolean flag3 = false;
 
+                System.out.println("[FairAnvil] book has " + map1.size() + " enchantment(s); checking applicability...");
                 for (Enchantment enchantment1 : map1.keySet()) {
                     if (enchantment1 != null) {
                         int i2 = map.containsKey(enchantment1) ? map.get(enchantment1).intValue() : 0;
                         int j2 = map1.get(enchantment1).intValue();
                         j2 = i2 == j2 ? j2 + 1 : Math.max(j2, i2);
-                        boolean flag1 = enchantment1.canApply(itemstack);
+                        boolean canApplyRaw = enchantment1.canApply(itemstack);
+                        boolean flag1 = canApplyRaw;
 
                         if (this.user.capabilities.isCreativeMode || itemstack.getItem() == Items.ENCHANTED_BOOK) {
                             flag1 = true;
                         }
 
+                        boolean incompatible = false;
                         for (Enchantment enchantment : map.keySet()) {
                             if (enchantment != enchantment1 && !enchantment1.isCompatibleWith(enchantment)) {
                                 flag1 = false;
+                                incompatible = true;
                                 ++i;
                             }
                         }
+
+                        System.out.println("[FairAnvil]   enchant=" + enchantmentName(enchantment1)
+                                + " lvl=" + j2 + " canApply=" + canApplyRaw
+                                + " incompatibleWithExisting=" + incompatible
+                                + " -> applied=" + flag1);
 
                         if (!flag1) {
                             flag3 = true;
@@ -222,6 +260,8 @@ public class ContainerFairAnvil extends ContainerRepair {
                 }
 
                 if (flag3 && !flag2) {
+                    System.out.println("[FairAnvil] EARLY RETURN: no applicable enchantments from the book"
+                            + " (every enchant failed canApply/compatibility) -> empty result, cost 0");
                     this.outputInv.setInventorySlotContents(0, ItemStack.EMPTY);
                     this.applyCost(0);
                     return;
@@ -269,7 +309,37 @@ public class ContainerFairAnvil extends ContainerRepair {
         }
 
         this.outputInv.setInventorySlotContents(0, itemstack1);
+
+        // TEMP DEBUG: breakdown of the anvil cost. Remove once the prior-work question is settled.
+        int leftRepairCost = itemstack.isEmpty() ? 0 : itemstack.getRepairCost();
+        int rightRepairCost = itemstack2.isEmpty() ? 0 : itemstack2.getRepairCost();
+        int clampedLevels = FairAnvilMod.hideTooExpensive ? Math.min(cost, 39) : cost;
+        System.out.println("[FairAnvil] cost breakdown:"
+                + " priorWork(j)=" + j
+                + " (left=" + leftRepairCost + ", right=" + rightRepairCost + ")"
+                + " new(i)=" + i
+                + " rawCost(j+i)=" + cost
+                + " shownLevels=" + clampedLevels
+                + " pointCharge=" + Experience.getExpFromLevel(clampedLevels));
+
         this.applyCost(cost);
+    }
+
+    // TEMP DEBUG helpers. Remove with the rest of the [FairAnvil] logging.
+    private static String dbgItem(ItemStack stack) {
+        if (stack == null || stack.isEmpty()) {
+            return "<empty>";
+        }
+        String id = stack.getItem().getRegistryName() == null ? "?" : stack.getItem().getRegistryName().toString();
+        int enchants = EnchantmentHelper.getEnchantments(stack).size();
+        return id + " x" + stack.getCount() + " repairCost=" + stack.getRepairCost() + " enchants=" + enchants;
+    }
+
+    private static String enchantmentName(Enchantment ench) {
+        if (ench == null) {
+            return "<null>";
+        }
+        return ench.getRegistryName() == null ? ench.getName() : ench.getRegistryName().toString();
     }
 
     /**
@@ -312,9 +382,18 @@ public class ContainerFairAnvil extends ContainerRepair {
 
         @Override
         public ItemStack onTake(EntityPlayer thePlayer, ItemStack stack) {
+            // TEMP DEBUG: confirm the server actually processes the take and what it charges.
+            int charge = Experience.getExpFromLevel(ContainerFairAnvil.this.costLevels);
+            System.out.println("[FairAnvil] onTake: costLevels=" + ContainerFairAnvil.this.costLevels
+                    + " pointCharge=" + charge
+                    + " xpBefore=" + Experience.getTotalExperience(thePlayer)
+                    + " result=" + dbgItem(stack));
+
             if (!thePlayer.capabilities.isCreativeMode) {
-                Experience.changeExp(thePlayer, -Experience.getExpFromLevel(ContainerFairAnvil.this.costLevels));
+                Experience.changeExp(thePlayer, -charge);
             }
+
+            System.out.println("[FairAnvil] onTake: xpAfter=" + Experience.getTotalExperience(thePlayer));
 
             ContainerFairAnvil.this.inputInv.setInventorySlotContents(0, ItemStack.EMPTY);
 
