@@ -20,6 +20,7 @@ import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AnvilUpdateEvent;
 
@@ -395,6 +396,13 @@ public class ContainerFairAnvil extends ContainerRepair {
 
             System.out.println("[FairAnvil] onTake: xpAfter=" + Experience.getTotalExperience(thePlayer));
 
+            // Mirror vanilla: post AnvilRepairEvent while both inputs are still in place. Mods hook it
+            // to keep or refund inputs (e.g. Enchanter Tools puts the Enchanted Inkwell and the rest of
+            // the book stack back next tick) and to change the anvil break chance.
+            float breakChance = ForgeHooks.onAnvilRepair(thePlayer, stack,
+                    ContainerFairAnvil.this.inputInv.getStackInSlot(0),
+                    ContainerFairAnvil.this.inputInv.getStackInSlot(1));
+
             ContainerFairAnvil.this.inputInv.setInventorySlotContents(0, ItemStack.EMPTY);
 
             if (ContainerFairAnvil.this.matCost > 0) {
@@ -416,7 +424,7 @@ public class ContainerFairAnvil extends ContainerRepair {
             IBlockState state = ContainerFairAnvil.this.world.getBlockState(ContainerFairAnvil.this.pos);
 
             if (!thePlayer.capabilities.isCreativeMode && !ContainerFairAnvil.this.world.isRemote
-                    && state.getBlock() == Blocks.ANVIL && thePlayer.getRNG().nextFloat() < 0.12F) {
+                    && state.getBlock() == Blocks.ANVIL && thePlayer.getRNG().nextFloat() < breakChance) {
                 int damage = state.getValue(BlockAnvil.DAMAGE).intValue() + 1;
 
                 if (damage > 2) {

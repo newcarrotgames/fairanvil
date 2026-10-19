@@ -28,7 +28,7 @@ $env:JAVA_HOME = "C:\Program Files\Eclipse Adoptium\jdk-8.0.482.8-hotspot"
 
 - Run from the `forge/` folder. The Gradle 4.10.3 wrapper is committed, so no global Gradle install is needed.
 - First build downloads Gradle/Minecraft/Forge and decompiles (several minutes); later builds are fast.
-- Output jar: `build/libs/FairAnvil-Forge-1.12.2-1.0.jar` (ignore the `-sources.jar`).
+- Output jar: `build/libs/FairAnvil-Forge-1.12.2-<version>.jar`, currently `1.1` (ignore the `-sources.jar`).
 - `build` is finalized by `copyToRLCraft`, which copies the jar into a hardcoded local RLCraft `mods/` dir. Override with `-PmodsDir=...`, or run the copy alone with `gradlew copyToRLCraft`.
 - Builds against Forge `1.12.2-14.23.5.2847`; the jar runs on any `14.23.5.x` 1.12.2 server.
 - If `stable_39` mappings fail to download, switch `mappings` in `build.gradle` to `snapshot_20171003`.
@@ -53,6 +53,7 @@ $env:JAVA_HOME = "C:\Program Files\Eclipse Adoptium\jdk-8.0.482.8-hotspot"
 3. The enchanting container lets vanilla roll the enchant, then refunds the levels vanilla took and charges the flat point equivalent.
 4. The GUI still shows vanilla's "level cost"; the actual deduction is the cheaper flat point equivalent, matching the original plugin.
 5. `ContainerFairAnvil.updateRepairOutput()` posts a Forge `AnvilUpdateEvent` so other mods' anvil recipes keep working. When another mod supplies an output, FairAnvil honors it but **adds the input prior-work penalty to the mod-reported cost** before applying the flat-point clamp/charge. Without this, mod-supplied recipes (e.g. `better_survival` / `somanyenchantments` custom-enchant application) report a tiny flat cost like `2` and would bypass the prior-work penalty entirely, making heavily-worked items nearly free to enchant.
+6. `FairOutputSlot.onTake()` posts Forge's `AnvilRepairEvent` (via `ForgeHooks.onAnvilRepair`) **before** clearing the input slots, exactly like vanilla's output slot, and uses the returned break chance (default 0.12) for anvil damage. Since 1.1. Without it, mods that refund inputs on that event lose items: Enchanter Tools' Enchanted Inkwell (book left + inkwell right gives an enchanted book, and the mod restores the inkwell and the rest of the book stack the next tick) was eaten along with the whole book stack (reported on the Nightmare server 2026-10-19).
 
 Config `config/fairanvil.cfg` (all default `true`):
 
