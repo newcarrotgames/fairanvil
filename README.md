@@ -2,8 +2,9 @@
 
 A Forge 1.12.2 port of the FairAnvil Bukkit plugin, built to run on RLCraft / Dregora servers.
 
-Anvils and enchanting tables charge a **flat XP-point cost** instead of whole scaling levels, and
-the anvil's **"Too Expensive!"** limit is removed. The cost no longer balloons just because your
+Anvils and enchanting tables charge their cost as **XP points counted from level 0** instead of
+taking whole levels off the top of your current level. The anvil's level cost itself is left exactly
+as the pack computes it (vanilla plus any mods that patch the anvil). The cost no longer balloons just because your
 level is high, which is the whole point of "fair" anvils.
 
 ## Server-side only
@@ -19,8 +20,8 @@ modpack) client and need **no extra download**:
 
 1. On right-click of an anvil or enchanting table, the server cancels the vanilla interaction and
    opens a custom container (`ContainerFairAnvil` / `ContainerFairEnchantment`).
-2. The anvil container reuses vanilla's combine/repair maths (so RLCraft enchantments behave
-   normally) but skips the 40-level cap and charges points via `Experience.getExpFromLevel(cost)`.
+2. The anvil container lets vanilla (and every mod that patches the anvil) compute the level cost, then
+   charges it as points via `Experience.getExpFromLevel(cost)`.
 3. The enchanting container lets vanilla roll the enchantment, then refunds the levels vanilla took
    and charges the flat point equivalent instead.
 
@@ -33,9 +34,8 @@ flat point equivalent, so it is cheaper than it looks (matching the original plu
 
 | Option             | Default | Meaning                                                              |
 | ------------------ | ------- | -------------------------------------------------------------------- |
-| `fairAnvil`        | `true`  | Apply fair cost + remove the cap on anvils.                          |
+| `fairAnvil`        | `true`  | Charge the anvil cost as points from level 0.                         |
 | `fairEnchant`      | `true`  | Apply fair cost on the enchanting table.                            |
-| `hideTooExpensive` | `true`  | Clamp the anvil cost below 40 so the client never shows "Too Expensive!". The XP-point charge is clamped to match, so big combines stay affordable and takeable. Set `false` to show/charge the true uncapped cost (which can re-introduce the red "Too Expensive!" text and require a lot of XP). |
 
 ## In-game command
 

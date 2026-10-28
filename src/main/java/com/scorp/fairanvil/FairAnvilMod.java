@@ -29,12 +29,11 @@ public class FairAnvilMod {
 
     public static final String MODID = "fairanvil";
     public static final String NAME = "FairAnvil";
-    public static final String VERSION = "1.1";
+    public static final String VERSION = "1.2";
 
     public static boolean enabled = true;
     public static boolean fairAnvil = true;
     public static boolean fairEnchant = true;
-    public static boolean hideTooExpensive = true;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -42,11 +41,11 @@ public class FairAnvilMod {
         config.load();
 
         fairAnvil = config.getBoolean("fairAnvil", Configuration.CATEGORY_GENERAL, true,
-                "Anvils charge a flat XP-point cost instead of scaling levels, and the 'Too Expensive!' limit is removed.");
+                "Anvils charge their level cost as XP points counted from level 0, instead of taking levels off the top.");
         fairEnchant = config.getBoolean("fairEnchant", Configuration.CATEGORY_GENERAL, true,
                 "The enchanting table charges a flat XP-point cost instead of consuming whole levels.");
-        hideTooExpensive = config.getBoolean("hideTooExpensive", Configuration.CATEGORY_GENERAL, true,
-                "Clamp the cost shown in the anvil GUI below 40 so the vanilla client never displays 'Too Expensive!'.");
+        // Removed in 1.2: the cost is no longer clamped below 40.
+        config.getCategory(Configuration.CATEGORY_GENERAL).remove("hideTooExpensive");
 
         if (config.hasChanged()) {
             config.save();

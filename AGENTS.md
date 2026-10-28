@@ -6,9 +6,10 @@
 ## Overview
 
 This folder is the **Forge 1.12.2** port of FairAnvil, built to run on RLCraft / Dregora
-servers. FairAnvil makes anvils and enchanting tables charge a **flat XP-point cost**
-instead of whole scaling levels, and removes the anvil's **"Too Expensive!"** cap. The
-cost no longer balloons just because the player's level is high.
+servers. FairAnvil makes anvils and enchanting tables charge their cost as **XP points counted from
+level 0** instead of taking whole levels off the top of the player's current level, so the
+price no longer balloons just because the player's level is high. Since 1.2 the anvil's
+**level cost itself is untouched**: it is whatever the pack computes without FairAnvil.
 
 The original **Bukkit/Spigot 1.17.1** plugin lives at the repo root (`../src`, `../pom.xml`)
 and is a separate Maven project. This `forge/` project shares the concept and the
@@ -28,7 +29,7 @@ $env:JAVA_HOME = "C:\Program Files\Eclipse Adoptium\jdk-8.0.482.8-hotspot"
 
 - Run from the `forge/` folder. The Gradle 4.10.3 wrapper is committed, so no global Gradle install is needed.
 - First build downloads Gradle/Minecraft/Forge and decompiles (several minutes); later builds are fast.
-- Output jar: `build/libs/FairAnvil-Forge-1.12.2-<version>.jar`, currently `1.1` (ignore the `-sources.jar`).
+- Output jar: `build/libs/FairAnvil-Forge-1.12.2-<version>.jar`, currently `1.2` (ignore the `-sources.jar`).
 - `build` is finalized by `copyToRLCraft`, which copies the jar into a hardcoded local RLCraft `mods/` dir. Override with `-PmodsDir=...`, or run the copy alone with `gradlew copyToRLCraft`.
 - Builds against Forge `1.12.2-14.23.5.2847`; the jar runs on any `14.23.5.x` 1.12.2 server.
 - If `stable_39` mappings fail to download, switch `mappings` in `build.gradle` to `snapshot_20171003`.
@@ -38,7 +39,8 @@ $env:JAVA_HOME = "C:\Program Files\Eclipse Adoptium\jdk-8.0.482.8-hotspot"
 `src/main/java/com/scorp/fairanvil/`
 
 - `FairAnvilMod.java` - `@Mod` entry point: loads config, registers the command, and intercepts anvil/enchanting-table right-clicks.
-- `ContainerFairAnvil.java` - custom anvil container reusing vanilla combine/repair math without the 40-level cap.
+- `ContainerFairAnvil.java` - custom anvil container: calls vanilla `updateRepairOutput` (so all anvil mixins/events apply) and swaps only the output slot, which charges points.
+- `LegacyRepairCost.java` - one-time rebase of items worked by FairAnvil <= 1.1 onto EnchantmentControl's cost scaling (see below).
 - `ContainerFairEnchantment.java` - custom enchanting container that refunds vanilla's level cost and charges the flat point equivalent.
 - `FairAnvilInteractionObject.java` / `FairEnchantInteractionObject.java` - `IInteractionObject` hooks used to open the custom containers.
 - `CommandFairAnvil.java` - `/fairanvil <toggle|anvil|enchant|status>` (op / permission level 2); `toggle` is the master switch.
@@ -49,17 +51,23 @@ $env:JAVA_HOME = "C:\Program Files\Eclipse Adoptium\jdk-8.0.482.8-hotspot"
 ## How it works
 
 1. On right-click of an anvil/enchanting table the server cancels the vanilla interaction and opens the matching custom container.
-2. The anvil container reuses vanilla combine/repair math but skips the 40-level cap and charges points via `Experience.getExpFromLevel(cost)`.
+2. The anvil container calls `super.updateRepairOutput()` and never computes a cost itself. The resulting `maximumCost` (levels) is charged as `Experience.getExpFromLevel(cost)` points. There is no clamp.
 3. The enchanting container lets vanilla roll the enchant, then refunds the levels vanilla took and charges the flat point equivalent.
 4. The GUI still shows vanilla's "level cost"; the actual deduction is the cheaper flat point equivalent, matching the original plugin.
-5. `ContainerFairAnvil.updateRepairOutput()` posts a Forge `AnvilUpdateEvent` so other mods' anvil recipes keep working. When another mod supplies an output, FairAnvil honors it but **adds the input prior-work penalty to the mod-reported cost** before applying the flat-point clamp/charge. Without this, mod-supplied recipes (e.g. `better_survival` / `somanyenchantments` custom-enchant application) report a tiny flat cost like `2` and would bypass the prior-work penalty entirely, making heavily-worked items nearly free to enchant.
+5. **Up to 1.1 FairAnvil re-implemented the anvil maths in its own `updateRepairOutput()`.** That silently bypassed every
+   mixin other mods put on `ContainerRepair#updateRepairOutput` - in Dregora, EnchantmentControl's QUADRATIC prior-work
+   scaling, `AnvilCount` tracking, Never Too Expensive, free book combination and zero-cost-if-unchanged - so items got
+   vanilla's doubling penalty (RepairCost 2^n-1, 32767 after 15 uses, tooltip "0 Anvil uses (32767)"), and a 39-level
+   clamp (`hideTooExpensive`, removed in 1.2) hid it. **Never override the cost logic again; wrap it.** 1.1 also added the
+   input prior-work penalty to `AnvilUpdateEvent`-supplied recipes; 1.2 drops that (vanilla/Forge don't). On each update
+   `LegacyRepairCost` rebases input items that have RepairCost `2^n-1` and no `AnvilCount` to EnchantmentControl's cost
+   for `n` uses (by reflection; skipped if EC is absent or `enableAnvilScalingChange` is off).
 6. `FairOutputSlot.onTake()` posts Forge's `AnvilRepairEvent` (via `ForgeHooks.onAnvilRepair`) **before** clearing the input slots, exactly like vanilla's output slot, and uses the returned break chance (default 0.12) for anvil damage. Since 1.1. Without it, mods that refund inputs on that event lose items: Enchanter Tools' Enchanted Inkwell (book left + inkwell right gives an enchanted book, and the mod restores the inkwell and the rest of the book stack the next tick) was eaten along with the whole book stack (reported on the Nightmare server 2026-10-19).
 
 Config `config/fairanvil.cfg` (all default `true`):
 
-- `fairAnvil` - flat anvil cost + removed cap.
+- `fairAnvil` - anvil cost charged as points from level 0.
 - `fairEnchant` - flat enchanting-table cost.
-- `hideTooExpensive` - clamp the displayed/charged cost below 40 so the vanilla client never shows "Too Expensive!".
 
 ## Conventions & constraints
 
@@ -73,8 +81,7 @@ Config `config/fairanvil.cfg` (all default `true`):
 - RLCraft heavily modifies progression; verify behavior against the exact pack version.
 - If another mod also intercepts anvil/enchanting-table right-clicks, event ordering matters.
 - The enchanting table still enforces vanilla's level requirement to unlock a slot (e.g. level 30 for the top option); only the consumed amount becomes a flat cost. If RLCraft gates it differently, set `fairEnchant=false` and keep just the fair anvil.
-- **Client/server cost divergence**: FairAnvil is server-side only and reuses the stock `minecraft:anvil` GUI on the client. RLCraft ships `anvilpatch`, which patches the client's own `ContainerRepair` cost math. The green "Enchantment Cost" the client draws can therefore differ from what FairAnvil computes/charges server-side - the server value is authoritative. When debugging a "wrong cost" report, trust the server logs over the on-screen number.
-- **Mod-supplied anvil recipes**: several pack mods (notably `better_survival`/`mujmajnkraftsbettersurvival` and `somanyenchantments`) apply their custom enchants via `AnvilUpdateEvent` with a hardcoded flat cost. See "How it works" step 5 - FairAnvil now folds the prior-work penalty into those. A book whose only enchant is incompatible with what's already on the item is rejected with an empty result (cost 0), which is correct vanilla behavior even if the client's patched anvil shows something takeable.
+- **Client/server cost**: the client computes the cost with its own `ContainerRepair` (same pack mods), and since 1.2 the server uses the identical vanilla path, so the displayed level cost matches what is charged (as points from level 0).
 
 ## Debugging cost issues
 
